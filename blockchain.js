@@ -92,6 +92,23 @@ class BlockChain{
         this.chain.push(newBlock);
     }
 
+    isValid(){
+
+        for(let i = 1; i < this.chain.length; i++){
+
+            let currentBlock = this.chain[i];
+            let prevBlock = this.chain[currentBlock - 1];
+
+            if(currentBlock.hash !== currentBlock.calculateHash()){
+                return false;
+            }
+            if( currentBlock.prevHash !== prevBlock.hash){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 let client1 = new Client("sipho", "zitha", "sz@gmail.com");
 let client2 = new Client("phumlane", "madolo", "pm@gmail.com");
@@ -118,4 +135,5 @@ let blockchain = new BlockChain();
 blocks.map( block =>{
     blockchain.addBlock(block);
 });
+console.log("is blockchain valid", blockchain.isValid());
 console.log(blockchain);
